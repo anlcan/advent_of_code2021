@@ -24,9 +24,15 @@ public class DayOne {
     @Test
     void firtInput() {
 
-        final List<Integer> integers = Util.readInteger("/day1/input.txt");
-        System.out.println(Sonar.countIncrement(integers));
-        //assertEquals(7,  Sonar.countIncrement(integers));
+        final List<Integer> integers = Util.readInteger("/day1/input1.txt");
+        assertEquals(1448,  Sonar.countIncrement(integers));
+    }
+
+    @Test
+    void secondInput() {
+
+        final List<Integer> integers = Util.readInteger("/day1/input2.txt");
+        assertEquals(1471,  Sonar.countSlidingIncrement(integers));
     }
 
 }
