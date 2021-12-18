@@ -7,16 +7,29 @@ import java.util.List;
  */
 public class Submarine {
 
-    private record Position (int horizontal,  int depth){
+    private record Position (int horizontal,  int depth, int aim){
         public Position () {
-            this(0,0);
+            this(0,0,0);
         }
 
+        public Position(int horizontal,  int dept) {
+            this(horizontal, dept, 0);
+        }
+
+        /**
+         * down X increases your aim by X units.
+         * up X decreases your aim by X units.
+         * forward X does two things:
+         * It increases your horizontal position by X units.
+         * It increases your depth by your aim multiplied by X.
+         * @param c  command
+         * @return
+         */
         public Position apply(final Command c){
             return switch (c.direction){
-                case "forward" ->   new Position(this.horizontal + c.value, this.depth);
-                case "down" ->      new Position(this.horizontal , this.depth+ c.value);
-                case "up" ->         new Position(this.horizontal , this.depth - c.value);
+                case "forward" ->   new Position(horizontal + c.value, depth + (c.value* aim), aim);
+                case "down" ->      new Position(this.horizontal , this.depth, this.aim + c.value);
+                case "up" ->         new Position(this.horizontal , this.depth, this.aim - c.value);
                 default -> throw new RuntimeException();
             };
         }

@@ -22,7 +22,8 @@ public class DayTwo {
                 .map(Submarine.Command::parseString)
                 .collect(Collectors.toList());
 
-        assertEquals(150, new Submarine().applyCourse(integers).courseData());
+        assertEquals(900, new Submarine().applyCourse(integers).courseData());
+//        assertEquals(150, new Submarine().applyCourse(integers).courseData());
     }
 
     @Test
@@ -32,7 +33,8 @@ public class DayTwo {
                 .map(Submarine.Command::parseString)
                 .collect(Collectors.toList());
 
-        assertEquals(1893605, new Submarine().applyCourse(integers).courseData());
+//        assertEquals(1893605, new Submarine().applyCourse(integers).courseData());
+        assertEquals(2120734350, new Submarine().applyCourse(integers).courseData());
     }
 
 }
