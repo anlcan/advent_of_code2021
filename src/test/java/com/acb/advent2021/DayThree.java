@@ -25,8 +25,8 @@ public class DayThree {
     void sampleTest() {
 
         final List<String> binaries = Util.readStrings("/day3/sample.txt");
-        assertEquals(198,
-                new Diagnostic(binaries).readPC());
+        assertEquals(198,new Diagnostic(binaries).readPC());
+        assertEquals(230,new Diagnostic(binaries).readLSR());
     }
 
     @Test
@@ -35,6 +35,7 @@ public class DayThree {
         final List<String> binaries = Util.readStrings("/day3/input1.txt");
         assertEquals(2261546,
                 new Diagnostic(binaries).readPC());
+        assertEquals(6775520,new Diagnostic(binaries).readLSR());
     }
 
 }
