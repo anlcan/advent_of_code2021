@@ -1,6 +1,9 @@
 package com.acb.dayFour;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -41,8 +44,7 @@ public class Bingo {
             final List<Integer> collect = verticals.stream()
                     .flatMap(List::stream)
                     .collect(Collectors.toList());
-            collect
-                    .removeAll(calledNumbers);
+            collect.removeAll(calledNumbers);
             return collect.stream().mapToInt(Integer::intValue).sum() * last;
         }
 
@@ -50,15 +52,6 @@ public class Bingo {
 
     public List<Card> cards = new ArrayList<>();
 
-        /**
-         *
-         * @param input:
-         *  3 15  0  2 22
-         *  9 18 13 17  5
-         * 19  8  7 25 23
-         * 20 11 10 24  4
-         * 14 21 16 12  6
-         */
     public void addCard(final String input){
         final List<List<Integer>> integers = Arrays.stream(input.split("\n"))
                 .map(s-> Arrays.stream(s.split(" "))
@@ -67,6 +60,22 @@ public class Bingo {
                         .boxed().toList()).collect(Collectors.toList());
         Card c = new Card(integers);
         cards.add(c);
+    }
+
+    public long last(final List<Integer> numbers) {
+        List<Card> winner = new ArrayList<>();
+        for (Integer i : numbers) {
+
+            for (Card c : cards) {
+                if (!winner.contains(c) && c.next(i)) {
+                    winner.add(c);
+                    if (winner.size() == cards.size()){
+                        return c.score();
+                    }
+                }
+            }
+        }
+        throw new RuntimeException("no dice");
     }
 
     public long play(final List<Integer> numbers){
@@ -78,8 +87,6 @@ public class Bingo {
 //            }
             for(Card c: cards){
                 if (c.next(i)){
-                    System.out.println(c.verticals);
-                    System.out.println(c.calledNumbers);
                     return c.score();
                 }
             }

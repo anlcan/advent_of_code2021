@@ -44,6 +44,7 @@ public class DayFour {
 
         final List<Integer> numbers = Arrays.stream(lines.get(0).split(",")).mapToInt(Integer::valueOf).boxed().toList();
         assertEquals(4512, bingo.play(numbers));
+        assertEquals(1924, bingo.last(numbers));
     }
 
     @Test
@@ -53,6 +54,16 @@ public class DayFour {
         IntStream.range(1, lines.size()).forEach(c-> bingo.addCard(lines.get(c)));
 
         final List<Integer> numbers = Arrays.stream(lines.get(0).split(",")).mapToInt(Integer::valueOf).boxed().toList();
-        assertEquals(4512, bingo.play(numbers));
+        assertEquals(64084, bingo.play(numbers));
+    }
+
+    @Test
+    void input2(){
+        final List<String> lines = Util.readStringsDoubleNewline("/day4/input1.txt");
+        Bingo bingo = new Bingo();
+        IntStream.range(1, lines.size()).forEach(c-> bingo.addCard(lines.get(c)));
+
+        final List<Integer> numbers = Arrays.stream(lines.get(0).split(",")).mapToInt(Integer::valueOf).boxed().toList();
+        assertEquals(12833, bingo.last(numbers));
     }
 }
