@@ -10,54 +10,49 @@ import java.util.stream.IntStream;
  */
 public class Lantern {
 
-    public static final int PUBERTY=2; // days
-    public static final int CYCLE=6; // 7 days including 0;
-    private int dayLeft;
+    public static final short PUBERTY=2; // days
+    public static final short CYCLE=6; // 7 days including 0;
 
-    public Lantern(){
-        this(CYCLE+PUBERTY);
-    }
-    public Lantern(int dayLeft) {
-        this.dayLeft = dayLeft;
-    }
 
-    public boolean tick(){
-        if (dayLeft == 0){
-            dayLeft = CYCLE;
-            return true;
-        } else {
-            dayLeft--;
-            return false;
-        }
-    }
+    public static final class SwarmTracker {
+        private long[] count = new long[9];
 
-    public static final class Swarm {
-        private List<Lantern> lanterns;
-
-        public Swarm(List<Lantern> lanterns) {
-            this.lanterns = lanterns;
-        }
-
-        public static Swarm of(final String input){
-            final List<Lantern> collect = Arrays.stream(input.split(","))
+        public static SwarmTracker of(final String input){
+            final List<Integer> collect = Arrays.stream(input.split(","))
                     .mapToInt(Integer::parseInt)
-                    .mapToObj(Lantern::new)
+                    .boxed()
                     .collect(Collectors.toList());
-            return new Swarm(collect);
+            return new SwarmTracker(collect);
         }
 
-        public int tick(int day){
-            IntStream.range(0,day).forEach(i-> tick());
-            return lanterns.size();
+        public SwarmTracker(List<Integer> collect) {
+            Arrays.fill(count, 0l);
+            collect.forEach(i-> {
+                count[i] = count[i]+1;
+            });
         }
 
-        public int tick(){
-            final List<Lantern> newLanterns = this.lanterns.stream()
-                    .filter(Lantern::tick)
-                    .map(l -> new Lantern())
-                    .toList();
-            lanterns.addAll(newLanterns);
-            return lanterns.size();
+        public void tick(){
+            long[] newCount = new long[9];
+
+            System.arraycopy(count, 1, newCount, 0, count.length-1);
+            newCount[CYCLE+PUBERTY] = count[0];
+            newCount[CYCLE] = newCount[CYCLE]+count[0];
+
+            this.count = newCount;
         }
+
+        public long tick(int day){
+            IntStream.range(0,day).forEach(i-> {
+                System.out.println(String.format("day %d %d", i, count[8]));
+                tick();
+            });
+            return size();
+        }
+
+        public long size(){
+            return Arrays.stream(count).sum();
+        }
+
     }
 }

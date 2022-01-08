@@ -13,17 +13,32 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class DaySix {
 
+
     @Test
     public void testSample(){
-        final Lantern.Swarm s1 = Lantern.Swarm.of("3,4,3,1,2");
+        final Lantern.SwarmTracker s1 = Lantern.SwarmTracker.of("3,4,3,1,2");
+//        assertEquals(5, s1.tick());
         assertEquals(26, s1.tick(18));
         assertEquals(5934, s1.tick(80-18));
+        assertEquals(191336, s1.tick(120-80));
+        assertEquals(26984457539l, s1.tick(256-120));
+
     }
 
     @Test
-    public void inputOneTest(){
+    public void sampleTest(){
         final List<String> strings = Util.readStrings("/day6/sample.txt");
-        final Lantern.Swarm s1 = Lantern.Swarm.of(strings.get(0));
-        assertEquals(26, s1.tick(80));
+        final Lantern.SwarmTracker s1 = Lantern.SwarmTracker.of(strings.get(0));
+        assertEquals(380612, s1.tick(80));
+
+    }
+
+
+    @Test
+    public void inputOneTest(){
+        final List<String> strings = Util.readStrings("/day6/input2.txt");
+        final Lantern.SwarmTracker s1 = Lantern.SwarmTracker.of(strings.get(0));
+//        assertEquals(380612, s1.tick(80));
+        assertEquals(1710166656900l, s1.tick(256));
     }
 }
