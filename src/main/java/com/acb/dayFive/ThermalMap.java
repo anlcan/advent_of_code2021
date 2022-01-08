@@ -1,70 +1,17 @@
 package com.acb.dayFive;
 
-import java.util.ArrayList;
+import com.acb.aux.Coordinate;
+import com.acb.aux.Point;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static java.lang.Math.*;
 
 /**
  * Created on 31.12.21.
  */
 public class ThermalMap {
-
-    public record Point(int x, int y){
-
-        public static Point of(final String str){
-            return new Point(Integer.parseInt(str.split(",")[0]),Integer.parseInt(str.split(",")[1]));
-        }
-
-
-        public static List<Point> inBetweenStraight(Point a, Point b){
-
-            if (a.x == b.x){
-                return IntStream.rangeClosed(min(a.y, b.y), max(a.y, b.y))
-                        .boxed()
-                        .map(i -> new Point(a.x, i))
-                        .collect(Collectors.toList());
-            } else if (a.y == b.y) {
-                return IntStream.rangeClosed(min(a.x, b.x), max(a.x, b.x))
-                        .boxed()
-                        .map(i -> new Point(i, a.y))
-                        .collect(Collectors.toList());
-            } else {
-                return new ArrayList<>();
-            }
-        }
-
-        public static List<Point> inBetweenDiagonal(Point a, Point b){
-            if ( abs(a.x - b.x) == abs(a.y - b.y)) {
-                return IntStream.rangeClosed(0, abs(a.x - b.x))
-                        .boxed()
-                        .map(i -> new Point(a.x + i, a.y + i))
-                        .collect(Collectors.toList());
-            } else {
-                return new ArrayList<>();
-            }
-        }
-    }
-
-    public static final class Coordinate{
-        final Point p;
-        final int value;
-        public Coordinate(Coordinate coordinate){
-            this(new Point(coordinate.p.x, coordinate.p.y),coordinate.value+1);
-        }
-        public Coordinate (Point p){
-            this(p,1);
-        }
-
-        public Coordinate(Point p, int i) {
-            this.p = p;
-            this.value   = i;
-        }
-    }
 
     final Map<Point, Coordinate> coordinates;
 
@@ -118,7 +65,7 @@ public class ThermalMap {
     }
 
     public long countOverLappedPoints(){
-        return coordinates.values().stream().filter(c -> c.value >= 2).count();
+        return coordinates.values().stream().filter(c -> c.getValue() >= 2).count();
     }
 
 }

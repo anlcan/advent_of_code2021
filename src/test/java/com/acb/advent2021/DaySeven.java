@@ -1,7 +1,7 @@
 package com.acb.advent2021;
 
 import com.acb.Util;
-import daySeven.Allign;
+import com.acb.daySeven.Allign;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class DaySeven {
         final List<String> strings = Util.readStrings("/day7/input1.txt");
         Allign a1 = Allign.of(strings.get(0));
         assertEquals(347011, a1.bestLinear());
-        assertEquals(37, a1.bestInc());
+        assertEquals(98363777, a1.bestInc());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.acb.advent2021;
 
 import com.acb.Util;
-import daySix.Lantern;
+import com.acb.daySix.Lantern;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
