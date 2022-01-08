@@ -28,4 +28,8 @@ public final class Coordinate {
         return p;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return ((Coordinate)obj).getPoint().equals(p);
+    }
 }
