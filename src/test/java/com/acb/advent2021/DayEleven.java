@@ -48,6 +48,6 @@ public class DayEleven {
         final List<String> strings = Util.readStrings("/day11/input1.txt");
         final Dumbo.Octopi oct = Dumbo.Octopi.of(strings);
 
-        assertEquals(1656, oct.stepOf(100));
+        assertEquals(1632, oct.stepOf(100));
     }
 }
