@@ -52,4 +52,15 @@ public record Point(int x, int y) {
                 new Point(x+1, y),
                 new Point(x-1, y));
     }
+
+    public List<Point> adjacentFull(){
+        final ArrayList<Point> points = new ArrayList<>(adjacent());
+        points.addAll(List.of(
+                new Point(x+1, y + 1),
+                new Point(x-1, y - 1),
+                new Point(x + 1, y-1),
+                new Point(x - 1, y+1))
+        );
+        return points;
+    }
 }

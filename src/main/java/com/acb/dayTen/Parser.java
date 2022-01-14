@@ -141,7 +141,6 @@ public class Parser {
         return input.stream().map(Parser::new).filter(Parser::isCorrupted).mapToInt(Parser::getErrorScore).sum();
     }
 
-
     /*
      the winner is found by sorting all of the scores and then taking the middle score.
      */
