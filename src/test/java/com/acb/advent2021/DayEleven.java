@@ -50,4 +50,20 @@ public class DayEleven {
 
         assertEquals(1632, oct.stepOf(100));
     }
+
+    @Test
+    public void sampleSyncTest() {
+        final List<String> strings = Util.readStrings("/day11/sample.txt");
+        final Dumbo.Octopi oct = Dumbo.Octopi.of(strings);
+
+        assertEquals(195, oct.firstInSync());
+    }
+
+    @Test
+    public void inputOneSyncTest() {
+        final List<String> strings = Util.readStrings("/day11/input1.txt");
+        final Dumbo.Octopi oct = Dumbo.Octopi.of(strings);
+
+        assertEquals(303, oct.firstInSync());
+    }
 }

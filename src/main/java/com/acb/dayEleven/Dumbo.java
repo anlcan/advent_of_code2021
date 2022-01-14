@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  */
 public class Dumbo {
 
-    private Coordinate coordinate;
+    public Coordinate coordinate;
     private int flashCount = 0;
 
 
@@ -24,13 +24,13 @@ public class Dumbo {
         return coordinate;
     }
 
-    public boolean step(){
+    public boolean step() {
         this.coordinate = new Coordinate(coordinate);
         return coordinate.getValue() == 10;
     }
 
-    public void step_done(){
-        if (coordinate.getValue()>9){
+    public void step_done() {
+        if (coordinate.getValue() > 9) {
             coordinate = new Coordinate(coordinate.getPoint(), 0);
             flashCount++;
         }
@@ -41,11 +41,11 @@ public class Dumbo {
     }
 
     public static class Octopi {
-        HashMap<Point,  Dumbo> fleat = new HashMap<>();
+        HashMap<Point, Dumbo> fleat = new HashMap<>();
         int width;
         int height;
 
-        public static Octopi of(final List<String> lines){
+        public static Octopi of(final List<String> lines) {
             final List<List<Integer>> integers = lines.stream()
                     .map(Util::readIntegers)
                     .toList();
@@ -53,7 +53,7 @@ public class Dumbo {
             List<Coordinate> coordinates = new ArrayList<>();
             final int width = integers.size();
             for (int x = 0; x < width
-                     ; x++) {
+                    ; x++) {
                 for (int y = 0; y < integers.get(0).size(); y++) {
                     coordinates.add(new Coordinate(new Point(x, y), integers.get(x).get(y)));
                 }
@@ -65,28 +65,28 @@ public class Dumbo {
             for (Coordinate coordinate : coordinates) {
                 fleat.put(coordinate.getPoint(), new Dumbo(coordinate));
             }
-            width = coordinates.stream().mapToInt(c -> c.getPoint().x()).max(). getAsInt();
+            width = coordinates.stream().mapToInt(c -> c.getPoint().x()).max().getAsInt();
             height = coordinates.stream().mapToInt(c -> c.getPoint().y()).max().getAsInt();
         }
 
-        public int stepOf(int count){
+        public int stepOf(int count) {
             IntStream.range(0, count).forEach(i -> this.step());
-            print();
             return flashCount();
         }
 
-        public void step(){
+        public void step() {
             print();
             final Collection<Dumbo> values = fleat.values();
             values.forEach(this::dumboStep);
             values.forEach(Dumbo::step_done);
 
         }
+
         public boolean dumboStep(final Dumbo d) {
             if (d.step()) {
                 final List<Point> points = d.getCoordinate().getPoint().adjacentFull();
-               // points.add(d.getCoordinate().getPoint());
-                points.stream().map(p-> fleat.get(p))
+                // points.add(d.getCoordinate().getPoint());
+                points.stream().map(p -> fleat.get(p))
                         .filter(Objects::nonNull)
                         .forEach(this::dumboStep);
                 return true;
@@ -95,11 +95,11 @@ public class Dumbo {
             }
         }
 
-        public int flashCount(){
+        public int flashCount() {
             return fleat.values().stream().mapToInt(Dumbo::getFlashCount).sum();
         }
 
-        public void print(){
+        public void print() {
             for (int i = 0; i <= width; i++) {
                 System.out.print("\n");
                 for (int j = 0; j <= height; j++) {
@@ -107,6 +107,16 @@ public class Dumbo {
                 }
             }
             System.out.println("\n-------------\n");
+        }
+
+        public int firstInSync() {
+            for (int i = 1; i < 5000; i++) {
+                stepOf(1);
+                if (0== fleat.values().stream().mapToInt(d-> d.coordinate.getValue()).sum()) {
+                    return i;
+                }
+            }
+         throw new RuntimeException("no sync in 5000 cycle");
         }
     }
 }
